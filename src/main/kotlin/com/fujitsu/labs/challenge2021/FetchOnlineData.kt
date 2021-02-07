@@ -16,12 +16,24 @@ class FetchOnlineData {
 
     val wbdf: WikibaseDataFetcher = WikibaseDataFetcher.getWikidataDataFetcher()
 
+    fun getId(str: String) : String {
+        val q43 = wbdf.searchEntities(str, "en", 10)
+        if(q43.isEmpty()) {
+            return ""
+        } else {
+            return q43.first().entityId
+        }
+    }
+
     fun getType(str: String) : String {
-        val q42 = wbdf.getEntityDocumentByTitle("enwiki", str)
+        val q42 = wbdf.getEntityDocument(getId(str))
         if(q42 is StatementDocument) {
-            val pa = (q42 as StatementDocument).findStatement("P31").value
-            if (pa is ItemIdValue) {
-                return (pa as ItemIdValue).id
+            val pa0 = (q42 as StatementDocument).findStatementGroup("P31")
+            if(pa0 != null ) {
+                val pa = pa0.statements.first().value
+                if (pa is ItemIdValue) {
+                    return (pa as ItemIdValue).id
+                }
             }
         }
         return ""
@@ -39,11 +51,13 @@ class FetchOnlineData {
         val ret = mutableListOf<String>()
         val q5 = wbdf.getEntityDocument(str)
         if(q5 is StatementDocument) {
-            val statements = (q5 as StatementDocument).findStatementGroup("P279").statements
-            for (i in statements) {
-                val state = i.value
-                if (state is ItemIdValue) {
-                    ret.add((state as ItemIdValue).id)
+            val group = (q5 as StatementDocument).findStatementGroup("P279")
+            if(group != null) {
+                for (i in group.statements) {
+                    val state = i.value
+                    if (state is ItemIdValue) {
+                        ret.add((state as ItemIdValue).id)
+                    }
                 }
             }
         }
@@ -56,7 +70,7 @@ class FetchOnlineData {
         println("a fjs:$label2 .")
         println("fjs:$label2  rdfs:label \"$label\"@en .")
         println("fjs:$label2  a rdfs:Class .")
-        println("fjs:$label2  rdfs:seeAlso <http://www.wikidata.org/entity/$label> .")
+        println("fjs:$label2  rdfs:seeAlso <http://www.wikidata.org/entity/$str> .")
         if(str != null) {
             val list = getClassList(str)
             for(i in list) {

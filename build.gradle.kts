@@ -2,6 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.30"
+    application
+    id("com.github.johnrengelman.shadow").version("6.1.0")
 }
 
 group = "com.fujitsu.labs.challenge2021"
@@ -27,4 +29,17 @@ tasks.test {
 
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks {
+    withType<Jar> {
+        manifest {
+            attributes(mapOf("Main-Class" to "com.fujitsu.labs.challenge2021.SparqlQueryKt"))
+        }
+    }
+
+}
+
+application {
+    mainClassName = "com.fujitsu.labs.challenge2021.SparqlQueryKt"
 }
