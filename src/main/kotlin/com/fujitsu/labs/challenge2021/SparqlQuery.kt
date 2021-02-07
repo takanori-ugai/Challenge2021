@@ -35,13 +35,20 @@ fun main(args: Array<String>) {
         } LIMIT 10
     """.trimIndent()
     val query: Query = QueryFactory.create(queryString)
-    println(queryString)
+//    println(queryString)
     val qexec: QueryExecution = QueryExecutionFactory.sparqlService("http://kg.hozo.jp/fuseki/kgrc2020v2/sparql", query)
     val results: ResultSet = qexec.execSelect()
 
 //    ResultSetFormatter.out(System.out, results, query)
+    val wikiFetch = FetchOnlineData()
     for(i in results) {
-        println(i.getLiteral("o").string)
+        val str = i.getLiteral("o").string
+        println(str)
+        val tt = wikiFetch.getType(str)
+        println(tt)
+        print(i.getResource("s").uri)
+        wikiFetch.printClassDefinition(tt)
+
     }
 }
 class SparqlQuery {
