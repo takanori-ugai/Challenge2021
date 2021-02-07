@@ -10,12 +10,14 @@ import org.apache.jena.rdf.model.NodeIterator;
 import org.apache.jena.rdf.model.RDFNode;
 
 fun main(args: Array<String>) {
+    val from = if(args.size==0) { "http://kgc.knowledge-graph.jp/data/SpeckledBand" } else { args[0] }
     val queryString = """
         PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>
         prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
         prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT DISTINCT *
-        FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>
+        FROM <$from>
+        #FROM <http://kgc.knowledge-graph.jp/data/SpeckledBand>
         #FROM <http://kgc.knowledge-graph.jp/data/DancingMen>
         #FROM <http://kgc.knowledge-graph.jp/data/ACaseOfIdentity>
         #FROM <http://kgc.knowledge-graph.jp/data/DevilsFoot>
