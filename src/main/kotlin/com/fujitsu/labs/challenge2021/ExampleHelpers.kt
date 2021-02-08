@@ -17,7 +17,6 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
-
 /**
  * Class for sharing code that is used in many examples. It contains several
  * static final members that can be modified to change the behaviour of example
@@ -106,8 +105,9 @@ object ExampleHelpers {
         val onlyCurrentRevisions: Boolean
         when (DUMP_FILE_MODE) {
             DumpProcessingMode.ALL_REVS, DumpProcessingMode.ALL_REVS_WITH_DAILIES -> onlyCurrentRevisions = false
-            DumpProcessingMode.CURRENT_REVS, DumpProcessingMode.CURRENT_REVS_WITH_DAILIES, DumpProcessingMode.JSON, DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST -> onlyCurrentRevisions =
-                true
+            DumpProcessingMode.CURRENT_REVS, DumpProcessingMode.CURRENT_REVS_WITH_DAILIES, DumpProcessingMode.JSON, DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST ->
+                onlyCurrentRevisions =
+                    true
             else -> onlyCurrentRevisions = true
         }
 
@@ -127,30 +127,37 @@ object ExampleHelpers {
         try {
             // Start processing (may trigger downloads where needed):
             when (DUMP_FILE_MODE) {
-                DumpProcessingMode.ALL_REVS, DumpProcessingMode.CURRENT_REVS -> dumpFile = dumpProcessingController
-                    .getMostRecentDump(DumpContentType.FULL)
+                DumpProcessingMode.ALL_REVS, DumpProcessingMode.CURRENT_REVS ->
+                    dumpFile = dumpProcessingController
+                        .getMostRecentDump(DumpContentType.FULL)
                 DumpProcessingMode.ALL_REVS_WITH_DAILIES, DumpProcessingMode.CURRENT_REVS_WITH_DAILIES -> {
                     val fullDumpFile: MwDumpFile = dumpProcessingController
                         .getMostRecentDump(DumpContentType.FULL)
                     val incrDumpFile: MwDumpFile = dumpProcessingController
                         .getMostRecentDump(DumpContentType.DAILY)
-                    lastDumpFileName = (fullDumpFile.getProjectName().toString() + "-"
-                            + incrDumpFile.getDateStamp() + "."
-                            + fullDumpFile.getDateStamp())
+                    lastDumpFileName = (
+                        fullDumpFile.getProjectName().toString() + "-" +
+                            incrDumpFile.getDateStamp() + "." +
+                            fullDumpFile.getDateStamp()
+                        )
                     dumpProcessingController.processAllRecentRevisionDumps()
                 }
-                DumpProcessingMode.JSON -> dumpFile = dumpProcessingController
-                    .getMostRecentDump(DumpContentType.JSON)
-                DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST -> dumpFile = dumpProcessingController
-                    .getMostRecentDump(DumpContentType.DAILY)
+                DumpProcessingMode.JSON ->
+                    dumpFile = dumpProcessingController
+                        .getMostRecentDump(DumpContentType.JSON)
+                DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST ->
+                    dumpFile = dumpProcessingController
+                        .getMostRecentDump(DumpContentType.DAILY)
                 else -> throw RuntimeException(
-                    "Unsupported dump processing type "
-                            + DUMP_FILE_MODE
+                    "Unsupported dump processing type " +
+                        DUMP_FILE_MODE
                 )
             }
             if (dumpFile != null) {
-                lastDumpFileName = (dumpFile.getProjectName().toString() + "-"
-                        + dumpFile.getDateStamp())
+                lastDumpFileName = (
+                    dumpFile.getProjectName().toString() + "-" +
+                        dumpFile.getDateStamp()
+                    )
                 dumpProcessingController.processDump(dumpFile)
             }
         } catch (e: TimeoutException) {

@@ -9,6 +9,7 @@ plugins {
 group = "com.fujitsu.labs.challenge2021"
 version = "0.1"
 
+val ktlintCfg by configurations.creating
 val wikidataToolkitVersion = "0.11.0"
 
 repositories {
@@ -18,9 +19,10 @@ repositories {
 dependencies {
     testImplementation(kotlin("test-junit"))
     implementation("org.apache.jena:apache-jena-libs:3.17.0")
-    implementation("org.wikidata.wdtk:wdtk-wikibaseapi:0.11.0")
-    implementation("org.wikidata.wdtk:wdtk-dumpfiles:0.11.0")
+    implementation("org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion")
+    implementation("org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion")
     implementation("org.slf4j:slf4j-log4j12:1.7.10")
+    ktlintCfg("com.pinterest:ktlint:0.40.0")
 }
 
 tasks.test {
@@ -43,3 +45,12 @@ tasks {
 application {
     mainClassName = "com.fujitsu.labs.challenge2021.SparqlQueryKt"
 }
+
+val ktlintFormat by tasks.creating(JavaExec::class) {
+  group = "formatting"
+  main = "com.pinterest.ktlint.Main"
+  classpath = ktlintCfg
+  args("-F", "src/**/*.kt")
+
+}
+

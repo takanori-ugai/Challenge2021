@@ -16,20 +16,20 @@ class FetchOnlineData {
 
     val wbdf: WikibaseDataFetcher = WikibaseDataFetcher.getWikidataDataFetcher()
 
-    fun getId(str: String) : String {
+    fun getId(str: String): String {
         val q43 = wbdf.searchEntities(str, "en", 10)
-        if(q43.isEmpty()) {
+        if (q43.isEmpty()) {
             return ""
         } else {
             return q43.first().entityId
         }
     }
 
-    fun getType(str: String) : String {
+    fun getType(str: String): String {
         val q42 = wbdf.getEntityDocument(getId(str))
-        if(q42 is StatementDocument) {
+        if (q42 is StatementDocument) {
             val pa0 = (q42 as StatementDocument).findStatementGroup("P31")
-            if(pa0 != null ) {
+            if (pa0 != null) {
                 val pa = pa0.statements.first().value
                 if (pa is ItemIdValue) {
                     return (pa as ItemIdValue).id
@@ -39,20 +39,20 @@ class FetchOnlineData {
         return ""
     }
 
-    fun getLabel(str: String) : String? {
+    fun getLabel(str: String): String? {
         val q42 = wbdf.getEntityDocument(str)
         if (q42 is ItemDocument) {
-            return  (q42 as ItemDocument).getLabels().get("en")?.getText()
+            return (q42 as ItemDocument).getLabels().get("en")?.getText()
         }
         return ""
     }
 
-    fun getClassList(str: String) : List<String> {
+    fun getClassList(str: String): List<String> {
         val ret = mutableListOf<String>()
         val q5 = wbdf.getEntityDocument(str)
-        if(q5 is StatementDocument) {
+        if (q5 is StatementDocument) {
             val group = (q5 as StatementDocument).findStatementGroup("P279")
-            if(group != null) {
+            if (group != null) {
                 for (i in group.statements) {
                     val state = i.value
                     if (state is ItemIdValue) {
@@ -71,16 +71,13 @@ class FetchOnlineData {
         println("fjs:$label2  rdfs:label \"$label\"@en .")
         println("fjs:$label2  a rdfs:Class .")
         println("fjs:$label2  rdfs:seeAlso <http://www.wikidata.org/entity/$str> .")
-        if(str != null) {
-            val list = getClassList(str)
-            for(i in list) {
-                val label4 = getLabel(i)
-                val label3 = label4?.replace(" ", "_")
-                println("fjs:$label2 rdfs:subClassOf fjs:$label3 .")
-                println("fjs:$label3 a rdfs:Class .")
-                println("fjs:$label3 rdfs:label \"$label4\"@en .")
-            }
+        val list = getClassList(str)
+        for (i in list) {
+            val label4 = getLabel(i)
+            val label3 = label4?.replace(" ", "_")
+            println("fjs:$label2 rdfs:subClassOf fjs:$label3 .")
+            println("fjs:$label3 a rdfs:Class .")
+            println("fjs:$label3 rdfs:label \"$label4\"@en .")
         }
-
     }
 }
