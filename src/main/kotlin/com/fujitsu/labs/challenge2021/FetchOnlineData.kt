@@ -28,11 +28,11 @@ class FetchOnlineData {
     fun getType(str: String): String {
         val q42 = wbdf.getEntityDocument(getId(str))
         if (q42 is StatementDocument) {
-            val pa0 = (q42 as StatementDocument).findStatementGroup("P31")
+            val pa0 = q42.findStatementGroup("P31")
             if (pa0 != null) {
                 val pa = pa0.statements.first().value
                 if (pa is ItemIdValue) {
-                    return (pa as ItemIdValue).id
+                    return pa.id
                 }
             }
         }
@@ -42,7 +42,7 @@ class FetchOnlineData {
     fun getLabel(str: String): String? {
         val q42 = wbdf.getEntityDocument(str)
         if (q42 is ItemDocument) {
-            return (q42 as ItemDocument).getLabels().get("en")?.getText()
+            return q42.getLabels().get("en")?.getText()
         }
         return ""
     }
@@ -51,12 +51,12 @@ class FetchOnlineData {
         val ret = mutableListOf<String>()
         val q5 = wbdf.getEntityDocument(str)
         if (q5 is StatementDocument) {
-            val group = (q5 as StatementDocument).findStatementGroup("P279")
+            val group = q5.findStatementGroup("P279")
             if (group != null) {
                 for (i in group.statements) {
                     val state = i.value
                     if (state is ItemIdValue) {
-                        ret.add((state as ItemIdValue).id)
+                        ret.add(state.id)
                     }
                 }
             }
