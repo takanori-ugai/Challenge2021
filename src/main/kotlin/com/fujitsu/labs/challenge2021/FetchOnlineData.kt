@@ -14,15 +14,11 @@ fun main(args: Array<String>) {
 
 class FetchOnlineData {
 
-    val wbdf: WikibaseDataFetcher = WikibaseDataFetcher.getWikidataDataFetcher()
+    private val wbdf: WikibaseDataFetcher = WikibaseDataFetcher.getWikidataDataFetcher()
 
     fun getId(str: String): String {
         val q43 = wbdf.searchEntities(str, "en", 10)
-        if (q43.isEmpty()) {
-            return ""
-        } else {
-            return q43.first().entityId
-        }
+        return if (q43.isEmpty()) { "" } else { q43.first().entityId }
     }
 
     fun getType(str: String): String {
@@ -41,10 +37,7 @@ class FetchOnlineData {
 
     fun getLabel(str: String): String? {
         val q42 = wbdf.getEntityDocument(str)
-        if (q42 is ItemDocument) {
-            return q42.getLabels().get("en")?.getText()
-        }
-        return ""
+        return if (q42 is ItemDocument) { q42.labels["en"]?.text } else { "" }
     }
 
     fun getClassList(str: String): List<String> {
