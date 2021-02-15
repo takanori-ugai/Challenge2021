@@ -35,7 +35,7 @@ class FetchOnlineData {
         return ""
     }
 
-    fun getLabel(str: String): String? {
+    fun getLabel(str: String): String {
         val q42 = wbdf.getEntityDocument(str)
         return if (q42 is ItemDocument) {
             val text = q42.labels["en"]?.text
@@ -62,7 +62,7 @@ class FetchOnlineData {
 
     fun printClassDefinition(str: String) {
         val label = getLabel(str)
-        val label2 = label?.replace(" ", "_")
+        val label2 = label.replace(" ", "_")
         println("a fjs:$label2 .")
         println("fjs:$label2  rdfs:label \"$label\"@en .")
         println("fjs:$label2  a rdfs:Class .")
@@ -70,7 +70,7 @@ class FetchOnlineData {
         val list = getClassList(str)
         for (i in list) {
             val label4 = getLabel(i)
-            val label3 = label4?.replace(" ", "_")
+            val label3 = label4.replace(" ", "_")
             println("fjs:$label2 rdfs:subClassOf fjs:$label3 .")
             println("fjs:$label3 a rdfs:Class .")
             println("fjs:$label3 rdfs:label \"$label4\"@en .")
