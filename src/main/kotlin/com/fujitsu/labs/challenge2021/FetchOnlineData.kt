@@ -39,7 +39,7 @@ class FetchOnlineData {
         val q42 = wbdf.getEntityDocument(str)
         return if (q42 is ItemDocument) {
             val text = q42.labels["en"]?.text
-            if(text.isNullOrEmpty() || text.startsWith("Wikimedia")) { "" } else {text}
+            if (text.isNullOrEmpty() || text.startsWith("Wikimedia")) { "" } else { text }
         } else { "" }
     }
 

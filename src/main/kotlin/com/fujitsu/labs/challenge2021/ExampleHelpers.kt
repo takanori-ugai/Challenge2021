@@ -108,7 +108,6 @@ object ExampleHelpers {
             DumpProcessingMode.CURRENT_REVS, DumpProcessingMode.CURRENT_REVS_WITH_DAILIES, DumpProcessingMode.JSON, DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST ->
                 onlyCurrentRevisions =
                     true
-            else -> onlyCurrentRevisions = true
         }
 
         // Subscribe to the most recent entity documents of type wikibase item:
@@ -148,10 +147,6 @@ object ExampleHelpers {
                 DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST ->
                     dumpFile = dumpProcessingController
                         .getMostRecentDump(DumpContentType.DAILY)
-                else -> throw RuntimeException(
-                    "Unsupported dump processing type " +
-                        DUMP_FILE_MODE
-                )
             }
             if (dumpFile != null) {
                 lastDumpFileName = (
@@ -179,7 +174,7 @@ object ExampleHelpers {
      * @throws IOException if the file or example output directory could not be created
      */
     @Throws(IOException::class)
-    fun openExampleFileOuputStream(filename: String?): FileOutputStream {
+    fun openExampleFileOuputStream(filename: String): FileOutputStream {
         var directoryPath: Path
         if (("" == lastDumpFileName)) {
             directoryPath = Paths.get(EXAMPLE_OUTPUT_DIRECTORY)
