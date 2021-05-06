@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.4.31"
+    kotlin("jvm") version "1.5.0"
     application
     id("com.github.johnrengelman.shadow").version("6.1.0")
 }
@@ -9,11 +9,8 @@ plugins {
 group = "com.fujitsu.labs.challenge2021"
 version = "0.1"
 
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions.useIR = true
-
 val ktlintCfg by configurations.creating
-val wikidataToolkitVersion = "0.11.0"
+val wikidataToolkitVersion = "0.11.1"
 
 repositories {
     mavenCentral()
@@ -46,7 +43,7 @@ tasks {
 }
 
 application {
-    mainClassName = "com.fujitsu.labs.challenge2021.SparqlQueryKt"
+    mainClass.set("com.fujitsu.labs.challenge2021.SparqlQueryKt")
 }
 
 val ktlintFormat by tasks.creating(JavaExec::class) {
