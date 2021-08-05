@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
           ?s rdf:type    kgc:PhysicalObject .
           }
         }
-    """
+    """.trimIndent()
     val query: Query = QueryFactory.create(queryString)
     val qexec: QueryExecution = QueryExecutionFactory.sparqlService("http://kg.hozo.jp/fuseki/kgrc2020v2/sparql", query)
     val results: ResultSet = qexec.execSelect()
