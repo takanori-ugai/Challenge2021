@@ -2,9 +2,9 @@ package com.fujitsu.labs.challenge2021
 
 import org.apache.jena.query.Query
 import org.apache.jena.query.QueryExecution
-import org.apache.jena.query.QueryExecutionFactory
 import org.apache.jena.query.QueryFactory
 import org.apache.jena.query.ResultSet
+import org.apache.jena.sparql.exec.http.QueryExecutionHTTP
 
 fun main(args: Array<String>) {
     val from = if (args.size == 0) { "http://kgc.knowledge-graph.jp/data/SpeckledBand" } else { args[0] }
@@ -34,7 +34,9 @@ fun main(args: Array<String>) {
         }
     """.trimIndent()
     val query: Query = QueryFactory.create(queryString)
-    val qexec: QueryExecution = QueryExecutionFactory.sparqlService("http://kg.hozo.jp/fuseki/kgrc2020v2/sparql", query)
+    val qexec: QueryExecution = QueryExecutionHTTP.create()
+        .endpoint("http://kg.hozo.jp/fuseki/kgrc2020v2/sparql")
+        .query(query).build()
     val results: ResultSet = qexec.execSelect()
 
     printHeader()
@@ -48,7 +50,7 @@ fun main(args: Array<String>) {
             val list = wikiFetch.getClassList(wikiFetch.getId(str))
             for (i2 in list) {
                 val label4 = wikiFetch.getLabel(i2)
-                val label3 = label4?.replace(" ", "_")
+                val label3 = label4.replace(" ", "_")
                 println("<${i.getResource("s").uri}>  rdfs:subClassOf fjs:$label3 .")
                 println("fjs:$label3 a rdfs:Class .")
                 println("fjs:$label3 rdfs:label \"$label4\"@en .")

@@ -5,7 +5,7 @@ import org.wikidata.wdtk.datamodel.interfaces.ItemIdValue
 import org.wikidata.wdtk.datamodel.interfaces.StatementDocument
 import org.wikidata.wdtk.wikibaseapi.WikibaseDataFetcher
 
-fun main(args: Array<String>) {
+fun main() {
     val aa = FetchOnlineData()
     val tt = aa.getType("Douglas Adams")
     println("a fjs:$tt .")
