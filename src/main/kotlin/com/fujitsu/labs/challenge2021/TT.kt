@@ -5,6 +5,4 @@ fun main() {
     println("Test Test")
 }
 
-class TT {
-
-}
+class TT
