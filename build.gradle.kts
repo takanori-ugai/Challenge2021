@@ -1,16 +1,16 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.9.10"
     application
-    id("org.jlleitschuh.gradle.ktlint") version "11.0.0"
-    id("com.github.johnrengelman.shadow").version("7.1.2")
+    id("org.jlleitschuh.gradle.ktlint") version "11.6.0"
+    id("com.github.johnrengelman.shadow").version("8.1.1")
 }
 
 group = "com.fujitsu.labs.challenge2021"
 version = "0.2"
 
-val wikidataToolkitVersion = "0.14.1"
+val wikidataToolkitVersion = "0.14.6"
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test-junit"))
-    implementation("org.apache.jena:apache-jena-libs:4.4.0")
+    implementation("org.apache.jena:apache-jena-libs:4.9.0")
     implementation("org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion")
     implementation("org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion")
     implementation("org.slf4j:slf4j-log4j12:2.+")
@@ -30,23 +30,23 @@ tasks {
     }
 
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
 
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
 
     compileJava {
         options.encoding = "UTF-8"
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     compileTestJava {
         options.encoding = "UTF-8"
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     withType<Jar> {

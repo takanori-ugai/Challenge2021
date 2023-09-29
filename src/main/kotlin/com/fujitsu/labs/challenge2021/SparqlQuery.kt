@@ -35,7 +35,7 @@ fun main(args: Array<String>) {
     """.trimIndent()
     val query: Query = QueryFactory.create(queryString)
     val qexec: QueryExecution = QueryExecutionHTTP.create()
-        .endpoint("http://kg.hozo.jp/fuseki/kgrc2020v2/sparql")
+        .endpoint("http://kg.hozo.jp/fuseki/ikgrc/sparql")
         .query(query).build()
     val results: ResultSet = qexec.execSelect()
 

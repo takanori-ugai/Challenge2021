@@ -91,7 +91,6 @@ object ExampleHelpers {
     fun processEntitiesFromWikidataDump(
         entityDocumentProcessor: EntityDocumentProcessor?
     ) {
-
         // Controller object for processing dumps:
         val dumpProcessingController = DumpProcessingController(
             "wikidatawiki"
@@ -112,7 +111,9 @@ object ExampleHelpers {
 
         // Subscribe to the most recent entity documents of type wikibase item:
         dumpProcessingController.registerEntityDocumentProcessor(
-            entityDocumentProcessor, null, onlyCurrentRevisions
+            entityDocumentProcessor,
+            null,
+            onlyCurrentRevisions
         )
 
         // Also add a timer that reports some basic progress information:
@@ -120,7 +121,9 @@ object ExampleHelpers {
             TIMEOUT_SEC
         )
         dumpProcessingController.registerEntityDocumentProcessor(
-            entityTimerProcessor, null, onlyCurrentRevisions
+            entityTimerProcessor,
+            null,
+            onlyCurrentRevisions
         )
         var dumpFile: MwDumpFile? = null
         try {
