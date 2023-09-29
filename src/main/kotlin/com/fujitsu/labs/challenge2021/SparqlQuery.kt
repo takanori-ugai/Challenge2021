@@ -6,8 +6,13 @@ import org.apache.jena.query.QueryFactory
 import org.apache.jena.query.ResultSet
 import org.apache.jena.sparql.exec.http.QueryExecutionHTTP
 
+/**
+ * Entry point of the program.
+ *
+ * @param args Command-line arguments.
+ */
 fun main(args: Array<String>) {
-    val from = if (args.size == 0) { "http://kgc.knowledge-graph.jp/data/SpeckledBand" } else { args[0] }
+    val from = args.firstOrNull() ?: "http://kgc.knowledge-graph.jp/data/SpeckledBand"
     val queryString = """
         PREFIX kgc: <http://kgc.knowledge-graph.jp/ontology/kgc.owl#>
         prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -63,12 +68,20 @@ fun main(args: Array<String>) {
     }
 }
 
+/**
+ * Prints the header of the RDF output.
+ */
 fun printHeader() {
     println(
-        "@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n" +
-            "@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n" +
-            "@prefix fjs: <http://challenge2021.labs.fujitsu.com/ontology/kgc.owl#> . \n"
+        """
+        @prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+        @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+        @prefix fjs: <http://challenge2021.labs.fujitsu.com/ontology/kgc.owl#> .
+        """.trimIndent()
     )
 }
 
+/**
+ * Represents a SparqlQuery.
+ */
 class SparqlQuery
