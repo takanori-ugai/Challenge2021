@@ -30,23 +30,23 @@ tasks {
     }
 
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
 
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
 
     compileJava {
         options.encoding = "UTF-8"
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     compileTestJava {
         options.encoding = "UTF-8"
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
+        sourceCompatibility = "11"
+        targetCompatibility = "11"
     }
 
     withType<Jar> {
