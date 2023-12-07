@@ -50,14 +50,11 @@ object ExampleHelpers {
      * having to wait for a whole dump file to process.
      */
     val TIMEOUT_SEC = 0
+
     /**
      * Returns the name of the dump file that was last processed. This can be
      * used to name files generated from this dump. The result might be the
      * empty string if no file has been processed yet.
-     */
-    /**
-     * Identifier of the dump file that was processed last. This can be used to
-     * name files generated while processing a dump file.
      */
     var lastDumpFileName = ""
 //        private set
@@ -88,14 +85,12 @@ object ExampleHelpers {
      *
      * @param entityDocumentProcessor the object to use for processing entities in this dump
      */
-    fun processEntitiesFromWikidataDump(
-        entityDocumentProcessor: EntityDocumentProcessor?
-    ) {
-
+    fun processEntitiesFromWikidataDump(entityDocumentProcessor: EntityDocumentProcessor?) {
         // Controller object for processing dumps:
-        val dumpProcessingController = DumpProcessingController(
-            "wikidatawiki"
-        )
+        val dumpProcessingController =
+            DumpProcessingController(
+                "wikidatawiki",
+            )
         dumpProcessingController.setOfflineMode(OFFLINE_MODE)
 
         // // Optional: Use another download directory:
@@ -106,53 +101,62 @@ object ExampleHelpers {
         when (DUMP_FILE_MODE) {
             DumpProcessingMode.ALL_REVS, DumpProcessingMode.ALL_REVS_WITH_DAILIES -> onlyCurrentRevisions = false
             DumpProcessingMode.CURRENT_REVS, DumpProcessingMode.CURRENT_REVS_WITH_DAILIES, DumpProcessingMode.JSON, DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST ->
-                onlyCurrentRevisions =
-                    true
+                onlyCurrentRevisions = true
         }
 
         // Subscribe to the most recent entity documents of type wikibase item:
         dumpProcessingController.registerEntityDocumentProcessor(
-            entityDocumentProcessor, null, onlyCurrentRevisions
+            entityDocumentProcessor,
+            null,
+            onlyCurrentRevisions,
         )
 
         // Also add a timer that reports some basic progress information:
-        val entityTimerProcessor = EntityTimerProcessor(
-            TIMEOUT_SEC
-        )
+        val entityTimerProcessor =
+            EntityTimerProcessor(
+                TIMEOUT_SEC,
+            )
         dumpProcessingController.registerEntityDocumentProcessor(
-            entityTimerProcessor, null, onlyCurrentRevisions
+            entityTimerProcessor,
+            null,
+            onlyCurrentRevisions,
         )
         var dumpFile: MwDumpFile? = null
         try {
             // Start processing (may trigger downloads where needed):
             when (DUMP_FILE_MODE) {
                 DumpProcessingMode.ALL_REVS, DumpProcessingMode.CURRENT_REVS ->
-                    dumpFile = dumpProcessingController
-                        .getMostRecentDump(DumpContentType.FULL)
+                    dumpFile =
+                        dumpProcessingController
+                            .getMostRecentDump(DumpContentType.FULL)
                 DumpProcessingMode.ALL_REVS_WITH_DAILIES, DumpProcessingMode.CURRENT_REVS_WITH_DAILIES -> {
-                    val fullDumpFile: MwDumpFile = dumpProcessingController
-                        .getMostRecentDump(DumpContentType.FULL)
-                    val incrDumpFile: MwDumpFile = dumpProcessingController
-                        .getMostRecentDump(DumpContentType.DAILY)
+                    val fullDumpFile: MwDumpFile =
+                        dumpProcessingController
+                            .getMostRecentDump(DumpContentType.FULL)
+                    val incrDumpFile: MwDumpFile =
+                        dumpProcessingController
+                            .getMostRecentDump(DumpContentType.DAILY)
                     lastDumpFileName = (
                         fullDumpFile.getProjectName().toString() + "-" +
                             incrDumpFile.getDateStamp() + "." +
                             fullDumpFile.getDateStamp()
-                        )
+                    )
                     dumpProcessingController.processAllRecentRevisionDumps()
                 }
                 DumpProcessingMode.JSON ->
-                    dumpFile = dumpProcessingController
-                        .getMostRecentDump(DumpContentType.JSON)
+                    dumpFile =
+                        dumpProcessingController
+                            .getMostRecentDump(DumpContentType.JSON)
                 DumpProcessingMode.JUST_ONE_DAILY_FOR_TEST ->
-                    dumpFile = dumpProcessingController
-                        .getMostRecentDump(DumpContentType.DAILY)
+                    dumpFile =
+                        dumpProcessingController
+                            .getMostRecentDump(DumpContentType.DAILY)
             }
             if (dumpFile != null) {
                 lastDumpFileName = (
                     dumpFile.getProjectName().toString() + "-" +
                         dumpFile.getDateStamp()
-                    )
+                )
                 dumpProcessingController.processDump(dumpFile)
             }
         } catch (e: TimeoutException) {
@@ -211,6 +215,11 @@ object ExampleHelpers {
      * possible values of [ExampleHelpers.DUMP_FILE_MODE].
      */
     enum class DumpProcessingMode {
-        JSON, CURRENT_REVS, ALL_REVS, CURRENT_REVS_WITH_DAILIES, ALL_REVS_WITH_DAILIES, JUST_ONE_DAILY_FOR_TEST
+        JSON,
+        CURRENT_REVS,
+        ALL_REVS,
+        CURRENT_REVS_WITH_DAILIES,
+        ALL_REVS_WITH_DAILIES,
+        JUST_ONE_DAILY_FOR_TEST,
     }
 }

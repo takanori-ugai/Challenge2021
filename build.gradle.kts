@@ -4,24 +4,41 @@ plugins {
     kotlin("jvm") version "1.9.21"
     application
     id("org.jlleitschuh.gradle.ktlint") version "12.0.2"
-    id("com.github.johnrengelman.shadow").version("7.1.2")
+    id(
+        "com.github.johnrengelman.shadow",
+    ).version(
+        "7.1.2",
+    )
 }
 
 group = "com.fujitsu.labs.challenge2021"
 version = "0.2"
 
-val wikidataToolkitVersion = "0.14.6"
+val wikidataToolkitVersion =
+    "0.14.6"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(kotlin("test-junit"))
-    implementation("org.apache.jena:apache-jena-libs:4.10.0")
-    implementation("org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion")
-    implementation("org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion")
-    implementation("org.slf4j:slf4j-log4j12:2.+")
+    testImplementation(
+        kotlin(
+            "test-junit",
+        ),
+    )
+    implementation(
+        "org.apache.jena:apache-jena-libs:4.10.0",
+    )
+    implementation(
+        "org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion",
+    )
+    implementation(
+        "org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion",
+    )
+    implementation(
+        "org.slf4j:slf4j-log4j12:2.+",
+    )
 }
 
 tasks {
@@ -51,25 +68,50 @@ tasks {
 
     withType<Jar> {
         manifest {
-            attributes(mapOf("Main-Class" to "com.fujitsu.labs.challenge2021.SparqlQueryKt"))
+            attributes(
+                mapOf(
+                    "Main-Class" to "com.fujitsu.labs.challenge2021.SparqlQueryKt",
+                ),
+            )
         }
     }
 }
 
 application {
-    mainClass.set("com.fujitsu.labs.challenge2021.SparqlQueryKt")
+    mainClass.set(
+        "com.fujitsu.labs.challenge2021.SparqlQueryKt",
+    )
 }
 
 ktlint {
-    verbose.set(true)
-    outputToConsole.set(true)
-    coloredOutput.set(true)
+    verbose.set(
+        true,
+    )
+    outputToConsole.set(
+        true,
+    )
+    coloredOutput.set(
+        true,
+    )
+    additionalEditorconfig.set(
+        mapOf(
+            "max_line_length" to "180",
+        ),
+    )
     reporters {
-        reporter(ReporterType.CHECKSTYLE)
-        reporter(ReporterType.JSON)
-        reporter(ReporterType.HTML)
+        reporter(
+            ReporterType.CHECKSTYLE,
+        )
+        reporter(
+            ReporterType.JSON,
+        )
+        reporter(
+            ReporterType.HTML,
+        )
     }
     filter {
-        exclude("**/style-violations.kt")
+        exclude(
+            "**/style-violations.kt",
+        )
     }
 }
