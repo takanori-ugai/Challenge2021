@@ -28,7 +28,7 @@ dependencies {
         ),
     )
     implementation(
-        "org.apache.jena:apache-jena-libs:4.10.0",
+        "org.apache.jena:apache-jena-libs:5.0.0",
     )
     implementation(
         "org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion",
