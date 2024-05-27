@@ -1,7 +1,7 @@
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.0.0"
     application
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     id(
