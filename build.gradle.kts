@@ -4,18 +4,13 @@ plugins {
     kotlin("jvm") version "2.0.0"
     application
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
-    id(
-        "com.github.johnrengelman.shadow",
-    ).version(
-        "7.1.2",
-    )
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "com.fujitsu.labs.challenge2021"
 version = "0.2"
 
-val wikidataToolkitVersion =
-    "0.15.3"
+val wikidataToolkitVersion = "0.15.3"
 
 repositories {
     mavenCentral()
