@@ -10,7 +10,7 @@ plugins {
 group = "com.fujitsu.labs.challenge2021"
 version = "0.2"
 
-val wikidataToolkitVersion = "0.15.3"
+val wikidataToolkitVersion = "0.16.0"
 
 repositories {
     mavenCentral()
