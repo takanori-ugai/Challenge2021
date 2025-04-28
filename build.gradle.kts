@@ -23,7 +23,7 @@ dependencies {
         ),
     )
     implementation(
-        "org.apache.jena:apache-jena-libs:5.3.0",
+        "org.apache.jena:apache-jena-libs:5.4.0",
     )
     implementation(
         "org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion",
