@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
@@ -17,23 +18,11 @@ repositories {
 }
 
 dependencies {
-    testImplementation(
-        kotlin(
-            "test-junit",
-        ),
-    )
-    implementation(
-        "org.apache.jena:apache-jena-libs:5.4.0",
-    )
-    implementation(
-        "org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion",
-    )
-    implementation(
-        "org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion",
-    )
-    implementation(
-        "org.slf4j:slf4j-log4j12:2.+",
-    )
+    testImplementation(kotlin("test-junit"))
+    implementation("org.apache.jena:apache-jena-libs:5.4.0")
+    implementation("org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion")
+    implementation("org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion")
+    implementation("org.slf4j:slf4j-log4j12:2.+")
 }
 
 tasks {
@@ -42,11 +31,11 @@ tasks {
     }
 
     compileKotlin {
-        kotlinOptions.jvmTarget = "11"
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
     }
 
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
+        compilerOptions.jvmTarget.set(JvmTarget.JVM_11)
     }
 
     compileJava {
@@ -94,15 +83,9 @@ ktlint {
         ),
     )
     reporters {
-        reporter(
-            ReporterType.CHECKSTYLE,
-        )
-        reporter(
-            ReporterType.JSON,
-        )
-        reporter(
-            ReporterType.HTML,
-        )
+        reporter(ReporterType.CHECKSTYLE)
+        reporter(ReporterType.JSON)
+        reporter(ReporterType.HTML)
     }
     filter {
         exclude(
