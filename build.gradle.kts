@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test-junit"))
-    implementation("org.apache.jena:apache-jena-libs:5.4.0")
+    implementation("org.apache.jena:apache-jena-libs:5.5.0")
     implementation("org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion")
     implementation("org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion")
     implementation("org.slf4j:slf4j-log4j12:2.+")
