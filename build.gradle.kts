@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "2.2.20"
     application
     id("org.jlleitschuh.gradle.ktlint") version "13.1.0"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.2.2"
 }
 
 group = "com.fujitsu.labs.challenge2021"
@@ -19,7 +19,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test-junit"))
-    implementation("org.apache.jena:apache-jena-libs:5.5.0")
+    implementation("org.apache.jena:apache-jena-libs:5.6.0")
     implementation("org.wikidata.wdtk:wdtk-wikibaseapi:$wikidataToolkitVersion")
     implementation("org.wikidata.wdtk:wdtk-dumpfiles:$wikidataToolkitVersion")
     implementation("org.slf4j:slf4j-log4j12:2.+")
