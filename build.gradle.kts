@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm") version "2.3.0"
     application
     id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
-    id("com.gradleup.shadow") version "9.3.0"
+    id("com.gradleup.shadow") version "9.3.1"
 }
 
 group = "com.fujitsu.labs.challenge2021"
