@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jlleitschuh.gradle.ktlint.reporter.ReporterType
 
 plugins {
-    kotlin("jvm") version "2.3.0"
+    kotlin("jvm") version "2.3.10"
     application
     id("org.jlleitschuh.gradle.ktlint") version "14.0.1"
     id("com.gradleup.shadow") version "9.3.1"
